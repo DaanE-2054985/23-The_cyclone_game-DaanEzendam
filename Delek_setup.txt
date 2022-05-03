@@ -1,0 +1,14 @@
+Set-up:
+ledstrip: 
++5V verbonden met de 3.3V van de esp32
+gnd verbonden met de ground van de esp32
+din verbonden met pin 17
+
+button: input_pullup
+verbonden met pin 13
+verbonden met ground
+
+potmeter:
+1: 3.3V
+2: pin 15
+3: ground
