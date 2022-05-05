@@ -12,3 +12,8 @@ potmeter:
 1: 3.3V
 2: pin 15
 3: ground
+
+beurt leds:
+kort pootje: gnd
+lang pootje: 220 ohm
+3 leds verbonden met pinnen 33,32,25
