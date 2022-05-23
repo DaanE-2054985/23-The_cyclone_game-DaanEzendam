@@ -52,7 +52,7 @@ TFT_eSPI tft = TFT_eSPI(); // Constructor for the TFT library
 #include <Adafruit_NeoPixel.h>       //Installeer deze library, via de library manage
 #define ADDLEDPIN 17
 #define BTN_PIN 13
-#define POT_PIN 36
+#define POT_PIN 15
 #define LED_PIN1 32
 #define LED_PIN2 33
 #define LED_PIN3 25
@@ -127,8 +127,8 @@ void setup()
 void loop()
 {
     int data = analogRead(POT_PIN);
-    //  Serial.print("speed: ");
-    //  Serial.println(data);
+    Serial.print("speed: ");
+    Serial.println(data);
     if (nextRound && name_set) {
         if (turns > 0) {
             if (!buttonDown) {
@@ -155,7 +155,6 @@ void loop()
     }
     else if (name_set == false) {
         if (nextRound) {
-            printName();
             if (current_name_letter < LETTERS_IN_NAME) {
                 name[current_name_letter] = alfabet[letter];
                 current_name_letter += 1;
@@ -165,6 +164,7 @@ void loop()
                 save_score();
                 current_name_letter = 0;
             }
+            printName();
         }
         if (letter_changed) {
             printName();
@@ -177,7 +177,7 @@ void save_score() {
     name_set = true;
     for (int i = 0; i < LETTERS_IN_NAME; i++) {
         board[current_board][i] = name[i];
-        name[i] = " ";
+        name[i] = ' ';
     }
     board[current_board][LETTERS_IN_NAME] = ':';
     char num[10];
@@ -324,17 +324,23 @@ void button_pressed() {
 void letter_up() {
     unsigned long current_time = millis();
     if (current_time - last_time > 200) {
-        letter = (letter + 1) % 26;
+        letter += 1;
+        if (letter > 25)
+            letter = 0;
         letter_changed = true;
     }
+    last_time = current_time;
 }
 
 void letter_down() {
     unsigned long current_time = millis();
     if (current_time - last_time > 200) {
-        letter = (letter - 1) % 26;
+        letter -= 1;
+        if (letter < 0)
+            letter = 25;
         letter_changed = true;
     }
+    last_time = current_time;
 }
 
 void printTitel()
